@@ -32,6 +32,9 @@ class Play extends Phaser.Scene {
         this.load.audio('lose_life', '/assets/aud/Distressed_Meow.mp3');
         this.load.audio('game_over', '/assets/aud/LoseCondition1.wav');
         this.load.audio('game_over_music', '/assets/aud/game over song.mp3');
+
+        // loading kitty run animation
+        this.load.spritesheet('kitty_run', './assets//img/kitty_run.png',{frameWidth: 100, frameHeight: 100, startFrame: 0, endFrame: 8});
     }
 
     create() {
@@ -41,7 +44,21 @@ class Play extends Phaser.Scene {
         // play music
         // this.sound.play('music'); // this music kinda annoying so uncomment for now XD
 
-        // code to make running cat
+        // kitty run animation config
+        this.anims.create({
+            key:'run',
+            frames: this.anims.generateFrameNumbers('kitty_run',{start: 0, end: 8, first:0}),
+            frameRate: 15,
+            repeat: -1
+        });
+
+        
+        // creating player 1 Kitty instance
+        this.p1Kitty = new Kitty(this, game.config.width/10, game.config.height - 125, 'kitty_run').setOrigin(0,0);
+        
+        //starting run animation on kitty
+        this.p1Kitty.play('run');
+
 
         // spawn obstacles on random interval
         this.makingObstacle = false;
@@ -144,6 +161,6 @@ class Play extends Phaser.Scene {
         }
     
     
-    
     }
+    
 }
